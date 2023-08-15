@@ -1,4 +1,11 @@
 # insecticide_resistance-AedesAegypti
+The analysis is based on mapping to Aedes aegypti GCF_002204515.2 reference assembly and uses corresponding GFF file. Neither is included in this repository as both are available via NCBI/ENA. The list of samples used is in ./InputData/SampleRegions.txt
+
+## Dependencies
+To download WGS libraries we used [enaBrowserTools ](https://github.com/enasequence/enaBrowserTools) and [Bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml) was used for mapping. Additional processing relied on [Samtools](https://www.htslib.org/), [bedtools](https://bedtools.readthedocs.io/en/latest/index.html), [Biopython](https://biopython.org/).
+
+Main python dependecies are pandas, numpy, sklearn, scipy, matplotlib, umap-learn, and hdbscan.
+
 ## The order of scripts:
 
 ### Generating vcfs and converting them to pandas DataFrame
