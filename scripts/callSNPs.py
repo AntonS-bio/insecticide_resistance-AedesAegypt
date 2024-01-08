@@ -1,9 +1,10 @@
 import multiprocessing as mp
 import subprocess
-from os import chdir, remove, listdir, mkdir, isdir
-from os.path import exists, isfile, splitext, join
+from os import chdir, remove, listdir, mkdir
+from os.path import exists, isfile, splitext, join, isdir
+from sys import argv
 
-wd="/mnt/storage5/anton/Mosquitoes/ResistanceGenes/"
+wd=argv[1]
 vcfDir=wd+"/VCFs/"
 bamsDir=wd+"/bams/"
 tempDir=wd+"/temp/"
@@ -16,16 +17,18 @@ if not isdir(vcfDir):
 if not isdir(tempDir):
     mkdir(tempDir)
 
+chdir(f'{wd}/InputData/')
 subprocess.call(f"samtools faidx {referenceFasta}", shell=True, executable="/bin/bash")
 if exists(referenceFasta.replace(".fasta",".dict")):
     remove(referenceFasta.replace(".fasta",".dict"))
 subprocess.call(f'gatk CreateSequenceDictionary -R {referenceFasta}', shell=True, executable="/bin/bash")
+chdir(wd)
 
 def runCaller(sampleID):
     bamfile=sampleID+".bam"
     subprocess.call(f"samtools addreplacerg  -r \"ID:{sampleID}\\tSM:{sampleID}\\tPL:Illumina\" -O BAM {bamsDir}/{bamfile} > {tempDir}/{bamfile}", shell=True, executable="/bin/bash")
     subprocess.call(f"samtools index {tempDir}/{bamfile}", shell=True, executable="/bin/bash")
-    subprocess.call(f"gatk HaplotypeCaller -I {tempDir}/{bamfile} --dont-use-soft-clipped-bases true  -R {referenceFasta} -O {vcfDir}{sampleID}.vcf", shell=True)
+    subprocess.call(f"gatk HaplotypeCaller -I {tempDir}/{bamfile} --dont-use-soft-clipped-bases true  -R {wd}/InputData/{referenceFasta} -O {vcfDir}{sampleID}.vcf", shell=True)
     remove(f"{tempDir}/{bamfile}")
 
 bamFiles = [f.replace(".bam","") for f in listdir(bamsDir) if isfile(join(bamsDir, f)) and (splitext(f)[-1]==".bam")]

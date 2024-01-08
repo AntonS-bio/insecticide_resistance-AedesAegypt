@@ -2,6 +2,8 @@
 
 wd="MyDir" #set to directory in which the alingments will be stored
 
+scriptsDir=$PWD
+
 cd ${wd}
 mkdir tempDir
 mkdir bams
@@ -27,20 +29,21 @@ while read -a value; do
 
 done < ${wd}"/InputData/SampleRegions.txt"
 
+cd ${scriptsDir}
 
 #call the SNPs using GATK
-python callSNPs.py
+python callSNPs.py ${wd}
 
 #for snpEff to work the coordinates of the fasta file use for alignment need to be changed to the coordinates in the original fasta file. 
 #alternatively, the snpEff can be run against custom gff (bedtools intersect -a GCF_002204515.2_AaegL5.0_genomic.gff -b ${wd}/InputData/mappedRegions.bed)
 #but the second option would make it difficult to determine the nucleotide coordinates of the substituions.
-python relabelVCFs.py
+python relabelVCFs.py ${wd}
 
 #the process so far has created a VCF file per sample. For analysis these need to be merged into multisample VCF
-bash mergeVCFs.sh wd
+bash mergeVCFs.sh ${wd}
 
 # calculate coverage based on BAM files
-python calculateCoverage.py
+python calculateCoverage.py ${wd}
 
 # Create dataframe for coverage data
-python generateCoverageDF.py
+python generateCoverageDF.py ${wd}

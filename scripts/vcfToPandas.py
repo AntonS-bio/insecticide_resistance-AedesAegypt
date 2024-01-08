@@ -32,7 +32,7 @@ with open(f'{wd}/InputData/mappedRegions.bed') as bedFile:
         relevantGeneIDs.add(values[3])
         if values[0] not in positionMetaData:
             positionMetaData[values[0]]={}
-        for i in range(int(values[1]), int(values[2])):
+        for i in range(int(values[1]), int(values[2])+1):
             positionMetaData[values[0]][i]={"mRNA":False,"exon":False, "CDS":False, "GeneID":values[3]}
 ##Populate the isExon, isCDS for the positionMetaData
 with open("/mnt/storage5/anton/Mosquitoes/GCF_002204515.2_AaegL5.0_genomic.gff") as gffFile:

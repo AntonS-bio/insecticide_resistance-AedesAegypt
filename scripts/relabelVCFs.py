@@ -1,7 +1,8 @@
 from os import  listdir
 from os.path import  isfile, join, splitext
+from sys import argv
 
-wd="/mnt/storage5/anton/Mosquitoes/ResistanceGenes/"
+wd=argv[1]
 sourceVcfDir=wd+"/VCFs/"
 outputVcfDir=wd+"/relabelled_VCFs/"
 
@@ -27,6 +28,7 @@ for file in vcfFiles:
                         output.write("##contig=<ID=NC_035108.1,length=474425716>\n")
                         output.write("##contig=<ID=NC_035109.1,length=409777670>\n")
                         output.write("##contig=<ID=NC_035159.1,length=16790>\n")
+                        output.write(line) #writes the #CHROM header line
                     else:
                         output.write(line)
                 else:

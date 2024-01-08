@@ -38,6 +38,7 @@ cryptic*
 Delete*
 *.pkl
 *.vcf
+do_not_include*
 
 
 # Distribution / packaging

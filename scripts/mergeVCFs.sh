@@ -17,7 +17,7 @@ while read -r file; do
     echo $prefix
 
     #index and gzip with bcftools for merge into multifile vcf
-    bcftools view -Oz -o ${tempDir}/${prefix}.vcf.gz ./${vcfDir}/${prefix}.vcf
+    bcftools view -Oz -o ${tempDir}/${prefix}.vcf.gz ${vcfDir}/${prefix}.vcf
 	bcftools index ${tempDir}/${prefix}.vcf.gz
 
     echo ${tempDir}/${prefix}.vcf.gz >> vcf_files.txt

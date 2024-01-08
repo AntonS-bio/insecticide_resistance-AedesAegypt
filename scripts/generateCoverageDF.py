@@ -1,13 +1,17 @@
 import pandas as pd
-from os import listdir
-from os.path import isfile
+from os import listdir, mkdir
+from os.path import isfile, isdir
+from sys import argv
 
 #start with coverage of features by reads
 #run CalculateCoverage.py to get the tsv file below
-wd="/mnt/storage5/anton/Mosquitoes/ResistanceGenes/"
+wd=argv[1]
 inputData=wd+"/InputData/"
 outputData=wd+"/OutputData/"
 coverageData=wd+"/coverage/"
+
+if not isdir(coverageData):
+    mkdir(coverageData)
 
 coverageFiles=[f for f in listdir(coverageData) if isfile(coverageData+f) and f.split(".")[-1]=="tsv"]
 libraryIDs=list(set([f.split("_")[0] for f in coverageFiles]))
