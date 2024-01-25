@@ -8,13 +8,13 @@ cd ${wd}
 mkdir tempDir
 mkdir bams
 #Fasta file consists of the mRNA regions plus 300nt upstream and downstream 
-bedtools getfasta -fi GCF_002204515.2_AaegL5.0_genomic.fna -bed ${wd}/InputData/mappedRegions.bed > mappedRegions.fasta
+bedtools getfasta -fi GCF_002204515.2_AaegL5.0_genomic.fna -bed ${wd}/InputData/mappedRegions.bed > ${wd}/InputData/mappedRegions.fasta
 
 bowtie2-build ${wd}/InputData/mappedRegions.fasta mappedRegions
 
-#the location of ENA tools (if using) needs to be set.
+#the location of ENA tools (if using) needs to be set. Without it the downloads are likely to take a very long time"
 enaToolsDir="ENAtoolsDir"
-aspera_ini="location of aspera.ini file. Otherwise the downloads are likely to take a very long time"
+aspera_ini="location of aspera.ini file"
 
 
 while read -a value; do 
